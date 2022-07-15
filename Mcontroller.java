@@ -3,20 +3,31 @@ package tp;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+
+import javax.servlet.annotation.MultipartConfig;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import javax.servlet.http.Part;
+
+import org.apache.commons.beanutils.BeanUtils;
 /**
  * Servlet implementation class Mcontroller
  */
 @WebServlet("/mcontrol")
+@MultipartConfig(maxFileSize=1024*1024*2, location="c:/Temp/img")
+
 public class Mcontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -103,7 +114,107 @@ public class Mcontroller extends HttpServlet {
 		return "tp/ls.jsp";
 	}
 	
-		
+	public String addBoard(HttpServletRequest request) {
+		Board n = new Board();
+		try {
+			Part part = request.getPart("file");
+			String fileName = getFilename(part);
+			if(fileName != null && !fileName.isEmpty()) {
+				part.write(fileName);				
+			}
+			BeanUtils.populate(n,  request.getParameterMap());
+			n.setImg("/img/" + fileName);
+			mdao.addBoard(n);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("게시글 추가 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글이 정상적으로 등록되지 않았습니다!!");
+			return listBoard(request);
+		}
+		return "redirect:/mcontrol?action=listBoard";		
+	}
+	
+	public String deleteBoard(HttpServletRequest request) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		try {
+			mdao.delBoard(aid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ctx.log("게시글 삭제 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글이 정상적으로 삭제되지 않았습니다!!");
+			return listBoard(request);
+		}
+		return "redirect:/mcontrol?action = listBoard";
+	}  
+	
+	/*
+	public String deleteBoard(HttpServletRequest request) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		Board n = new Board();
+		try {			
+			BeanUtils.populate(n,  request.getParameterMap());			
+			mdao.delBoard(n);
+			request.setAttribute("board", n);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("게시글 수정 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글이 정상적으로 수정되지 않았습니다!!");			
+		}
+		return "redirect:/mcontrol?action=listBoard";		
+	}		*/
+	
+	
+	public String listBoard(HttpServletRequest request) {
+		List<Board> list;
+		try {
+			list = mdao.getAll();
+			request.setAttribute("boardlist",  list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("게시글 목록 생성 과정에서 문제 발생!!");
+			request.setAttribute("error", "게시글 목록이 정상적으로 처리되지 않았습니다!!");
+		}
+		return "TP/MList.jsp";
+			
+	}
+	public String getBoard(HttpServletRequest request) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		try {
+			Board n = mdao.getBoard(aid);
+			request.setAttribute("board", n);			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ctx.log("게시글을 가져오는 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글을 정상적으로 가져오지 못했습니다!!");
+		}
+		return "TP/MView.jsp";
+	}
+	
+	private String getFilename(Part part) {
+		String fileName = null;
+		String header = part.getHeader("content-disposition");
+		System.out.println("Header => "+header);
+		int start = header.indexOf("filename=");
+		fileName = header.substring(start+10, header.length()-1);
+		ctx.log("파일명:"+fileName);
+		return fileName;
+	}
+	
+	
+	
+	public String updateBoard(HttpServletRequest request) {
+		Board n = new Board();
+		try {			
+			BeanUtils.populate(n,  request.getParameterMap());			
+			mdao.updateBoard(n);
+			request.setAttribute("board", n);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("게시글 수정 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글이 정상적으로 수정되지 않았습니다!!");			
+		}
+		return "redirect:/mcontrol?action=listBoard";		
+	}	
 		
 	
 	}

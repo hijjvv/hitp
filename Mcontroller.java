@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Mcontroller
  */
 @WebServlet("/mcontrol")
+@MultipartConfig(maxFileSize=1024*1024*2, location="c:/Temp/img")
 public class Mcontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

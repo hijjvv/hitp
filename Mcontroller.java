@@ -147,22 +147,6 @@ public class Mcontroller extends HttpServlet {
 		return "redirect:/mcontrol?action = listBoard";
 	}  
 	
-	/*
-	public String deleteBoard(HttpServletRequest request) {
-		int aid = Integer.parseInt(request.getParameter("aid"));
-		Board n = new Board();
-		try {			
-			BeanUtils.populate(n,  request.getParameterMap());			
-			mdao.delBoard(n);
-			request.setAttribute("board", n);
-		} catch (Exception e) {
-			e.printStackTrace();
-			ctx.log("게시글 수정 과정에서 문제 발생!!");
-			request.setAttribute("error",  "게시글이 정상적으로 수정되지 않았습니다!!");			
-		}
-		return "redirect:/mcontrol?action=listBoard";		
-	}		*/
-	
 	
 	public String listBoard(HttpServletRequest request) {
 		List<Board> list;
@@ -200,8 +184,6 @@ public class Mcontroller extends HttpServlet {
 		return fileName;
 	}
 	
-	
-	
 	public String updateBoard(HttpServletRequest request) {
 		Board n = new Board();
 		try {			
@@ -214,8 +196,7 @@ public class Mcontroller extends HttpServlet {
 			request.setAttribute("error",  "게시글이 정상적으로 수정되지 않았습니다!!");			
 		}
 		return "redirect:/mcontrol?action=listBoard";		
-	}	
-		
+	}
 	
 	}
 

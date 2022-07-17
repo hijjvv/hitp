@@ -40,24 +40,14 @@
 	 		</form>
 	 	</div>
 	 </div>
-<!-- 	 
-	 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#updateForm" aria-expanded="false" aria-controls="updateForm">
-	 게시글 삭제
+		
+	<button class="btn btn-outline-info mb-3" type="submit" onclick="return delOK()">
+	 삭제하기
 	 </button>
-	 <div class="collapse" id="updateForm"> 
-	 	<div class="card card-body">
-	 		<form method="post" action="/jwbook/mcontrol?action=updateBoard"
-	 			enctype="multipart/form-data" name="frm">	 			
-	 			<input type="hidden" name="aid" value="${board.aid}" />
-	 			<label class="form-label">제목</label>
-	 			<input type="text" name="title" class="form-control" value="${board.title}"/>	 			
-	 			<label class="form-label">게시글 내용</label>
-	 			<textarea cols="50" rows="5" name="content" class="form-control">${board.content}</textarea>
-	 			<button type="submit" class="btn btn-success mt-3" onclick="return send()">삭제</button>
-	 		</form>
-	 	</div>
+	 <div id="deleteForm" class="remove">
+	 	<form method="post" action="/jwbook/mcontrol?action=deleteBoard&aid=${board.aid}" name="fra">	 	
+	 	</form>
 	 </div>
-	  -->
 	
 	</div>
 <script>
@@ -70,6 +60,14 @@ function send(){
 	} frm.submit
 	}
 	
+function delOK() {	
+	if(!confirm ("정말 삭제하시겠습니가?")) {
+		alert("취소되었습니다");
+		return false;
+	} else {
+		alert("삭제되었습니다");		
+	}	fra.submit();
+}	
 
 </script>
 </body>

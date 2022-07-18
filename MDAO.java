@@ -105,4 +105,17 @@ public class MDAO {
 		
 	}
 	
+	//조회수 증가 메서드
+	public void updateCount(int aid) throws SQLException {		
+		Connection conn = open();
+		String sql = "UPDATE BOARD SET COUNT = COUNT + 1 WHERE AID=?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+
+		try(conn; pstmt) {
+			pstmt.setInt(1, aid);			
+			if(pstmt.executeUpdate() == 0) {
+				throw new SQLException("조회수 에러");
+			}			
+		}				
+	}
 }

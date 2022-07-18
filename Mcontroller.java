@@ -163,8 +163,10 @@ public class Mcontroller extends HttpServlet {
 	}
 	public String getBoard(HttpServletRequest request) {
 		int aid = Integer.parseInt(request.getParameter("aid"));
+		int count=0;
 		try {
 			Board n = mdao.getBoard(aid);
+			mdao.updateCount(aid);
 			request.setAttribute("board", n);			
 		} catch (SQLException e) {
 			e.printStackTrace();

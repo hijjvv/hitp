@@ -1,6 +1,5 @@
 package tp;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,24 +9,110 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MDAO {
+
+	
 	final String JDBC_DRIVER = "org.h2.Driver";
 	final String JDBC_URL = "jdbc:h2:tcp://localhost/~/jwbookdb";
 	
-	//DB 연결을 가져오는 메서드
+	//DB 연결을 하는 메서드,
+	
 	public Connection open() {
 		Connection conn = null;
+		
 		try {
 			Class.forName(JDBC_DRIVER);
 			conn = DriverManager.getConnection(JDBC_URL,"jwbook","1234");
-		} catch (Exception e) {e.printStackTrace();}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return conn;
 	}
-	//게시글 목록 전체를 가져오는 메서드
+	
+	
+	public void addUser(UserDo u) throws Exception {
+		
+		Connection conn = open();
+		
+		String sql = "insert into USER(ID,PW,EMAIL,NAME) values (?,?,?,?)";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		try(conn;pstmt) {
+			pstmt.setString(1, u.getId());
+			pstmt.setString(2, u.getPw());
+			pstmt.setString(3, u.getEmail());
+			pstmt.setString(4, u.getName());
+			pstmt.executeUpdate();
+		}
+		
+	}
+	
+	
+	public int login(String id,String pw) {
+		
+	Connection conn = open();
+		
+    String sql = "SELECT pw from user where id= ? ";
+	try {
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1,  id);
+		ResultSet rs = pstmt.executeQuery();
+		
+		if (rs.next()) {
+			
+			if (rs.getString("pw").equals(pw)) {
+				return 1; // 로그인 성공
+			} else {
+				return 0; // 비밀번호 불일치
+			}
+			
+		
+		} return -1; //아이디가 없음
+		
+		}catch (SQLException e) {
+		}
+	return -2;
+		
+	}
+	
+	
+	public int selectOne(String userid) {
+		Connection conn = open();
+		
+		String sql = "select id from user where id =?";
+		
+		
+		
+
+		try {
+			
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			ResultSet rs = pstmt.executeQuery();
+			
+			
+			if (rs.next()) {
+				if (rs.getString("id").equals(userid)) {
+					return 1; //중복
+				} else {
+					return 0; //비중복
+				}
+			
+
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0; //오류
+	}
+	
+	
 	public List<Board> getAll() throws Exception {
 		Connection conn = open();
 		List<Board> boardList = new ArrayList<>();
 		
-		String sql = "select AID, TITLE, PARSEDATETIME(date,'yyyy-MM-dd') as cdate from board;";
+		String sql = "select AID, TITLE, PARSEDATETIME(date,'yyyy-MM-dd') as cdate , count from board;";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		ResultSet rs = pstmt.executeQuery();
 		
@@ -37,6 +122,7 @@ public class MDAO {
 				n.setAid(rs.getInt("aid"));
 				n.setTitle(rs.getString("title"));
 				n.setDate(rs.getString("cdate"));
+				n.setCount(rs.getInt("count"));
 				boardList.add(n);
 			}
 			return boardList;
@@ -65,13 +151,14 @@ public class MDAO {
 	//게시글 추가 메서드
 	public void addBoard(Board n) throws Exception {
 		Connection conn = open();
-		String sql = "insert into board(title,img,date,content) values(?,?,CURRENT_TIMESTAMP(),?)";
+		String sql = "insert into board(title,img,date,content,count) values(?,?,CURRENT_TIMESTAMP(),?,?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
 		try(conn; pstmt) {
 			pstmt.setString(1,  n.getTitle());
 			pstmt.setString(2,  n.getImg());
 			pstmt.setString(3,  n.getContent());
+			pstmt.setInt(4,  0);
 			pstmt.executeUpdate();	
 		}
 	}
@@ -118,4 +205,7 @@ public class MDAO {
 			}			
 		}				
 	}
+	
+	
+	
 }

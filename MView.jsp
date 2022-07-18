@@ -16,7 +16,7 @@
 	<div class="card w=75 mx-auto">
 		<img class="card-img-top" src="${board.img}">
 		<div class = "card-body">
-			<h4 class="card-title">Date: ${board.date}, 조회수: ${board.count</h4>
+			<h4 class="card-title">Date: ${board.date}, 조회수: ${board.count}  </h4>
 			<p class="card-text">Content: ${board.content}</p>
 		</div> 
 	</div>
@@ -68,7 +68,6 @@ function delOK() {
 		alert("삭제되었습니다");		
 	}	fra.submit();
 }	
-
 </script>
 </body>
 </html>

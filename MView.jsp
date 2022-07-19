@@ -48,7 +48,22 @@
 	 	<form method="post" action="/jwbook/mcontrol?action=deleteBoard&aid=${board.aid}" name="fra">	 	
 	 	</form>
 	 </div>
-	
+		
+		
+	 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#replyForm" aria-expanded="false" aria-controls="replyForm">
+	 댓글 달기
+	 </button>
+	 <div class="collapse" id="replyForm"> 
+	 	<div class="card card-body">
+	 		<form method="post" action="/jwbook/mcontrol?action=replyBoard"
+	 			enctype="multipart/form-data" name="frr">	 			
+	 			<input type="hidden" name="aid" value="${board.aid}" />	 						
+	 			<label class="form-label">댓글 내용</label>
+	 			<textarea cols="40" rows="5" name="content" class="form-control">${board.content}</textarea>
+	 			<button type="submit" class="btn btn-success mt-3" onclick="return send()">수정하기</button>
+	 		</form>
+	 	</div>
+	 </div>
 	</div>
 <script>
 function send(){

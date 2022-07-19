@@ -17,10 +17,9 @@
 	<hr />
 	<ul class="list-group">
 	 <c:forEach var="board" items="${boardlist}" varStatus="status">
-	  <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-	  <a href="mcontrol?action=getBoard&aid=${board.aid}" class="test-decoration-none">[${status.count}] ${board.title}, ${board.date}</a>
-	  <a class="test-decoration-none">${board.count}</a>		  
-	  }
+	  <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">	
+	  <a  href="mcontrol?action=getBoard&aid=${board.aid}"    class="test-decoration-none"> [${status.count}], ${board.title}, ${board.date} </a>
+	  <a class="test-decoration-none">${board.count}, ${UserDo.id}</a>	  
 	  </li>
 	 </c:forEach>
 	</ul>
@@ -30,7 +29,7 @@
 	   에러 발생: ${error}
 	   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
 	  </div>
-	 </c:if>
+	 </c:if>	 
 	 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#addForm" aria-expanded="false" aria-controls="addForm">
 	 게시글 등록
 	 </button>
@@ -48,6 +47,13 @@
 	 		</form>
 	 	</div>
 	 </div>
+	 
+	
+	 <div style="text-align:center; vertical-align:bottom; height:50px;">
+	 	<c:forEach begin="1" end="${requestScope.pageLength}" step="1" var="page">
+	 		<span><a href="mcontrol?action=listBoard&aid=${board.aid}&page=${page}" >${page}</a></span>
+	 	</c:forEach>
+	 </div> 	 
 	 </div>
 
 </body>

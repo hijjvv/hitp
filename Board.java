@@ -8,6 +8,7 @@ public class Board {
 	private String content;
 	private int count;
 	private String img;
+	private String reply;
 
 	public int getAid() {
 		return aid;
@@ -45,7 +46,28 @@ public class Board {
 	public void setImg(String img) {
 		this.img = img;
 	}
+	public String getReply() {
+		return reply;
+	}
+	public void setReply(String reply) {
+		this.reply = reply;
+	}
 
-	
+//Paging 변수선언
+	private int startIdx ;
+	private int rowCountPerPage;
+		
+	public int getStartIdx() {
+		return startIdx;
+	}
+	public void setStartIdx(int startIdx) {
+		this.startIdx = startIdx;
+	}
+	public int getRowCountPerPage() {
+		return rowCountPerPage;
+	}
+	public void setRowCountPerPage(int rowCountPerPage) {
+		this.rowCountPerPage = rowCountPerPage;
+	}		
 	
 }

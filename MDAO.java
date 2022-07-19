@@ -108,22 +108,29 @@ public class MDAO {
 	}
 	
 	
-	public List<Board> getAll() throws Exception {
+	//게시글 목록 전체를 가져오는 메서드
+	public List<Board> getAll(Board n) throws Exception {
 		Connection conn = open();
 		List<Board> boardList = new ArrayList<>();
 		
-		String sql = "select AID, TITLE, PARSEDATETIME(date,'yyyy-MM-dd') as cdate , count from board;";
-		PreparedStatement pstmt = conn.prepareStatement(sql);
+		String sql = "select AID, TITLE, PARSEDATETIME(date,'yyyy-MM-dd') as cdate, count from board order by aid desc LIMIT ?, ?;";
+		PreparedStatement pstmt = conn.prepareStatement(sql);	
+		pstmt.setInt(1, n.getStartIdx());
+		pstmt.setInt(2, n.getRowCountPerPage());
 		ResultSet rs = pstmt.executeQuery();
+		
+		
 		
 		try(conn; pstmt; rs) {
 			while(rs.next()) {
-				Board n = new Board();
-				n.setAid(rs.getInt("aid"));
-				n.setTitle(rs.getString("title"));
-				n.setDate(rs.getString("cdate"));
-				n.setCount(rs.getInt("count"));
-				boardList.add(n);
+				Board c = new Board();
+				c.setAid(rs.getInt("aid"));
+				c.setTitle(rs.getString("title"));
+				c.setDate(rs.getString("cdate"));
+				c.setCount(rs.getInt("count"));
+				boardList.add(c);
+				
+
 			}
 			return boardList;
 		}
@@ -132,7 +139,7 @@ public class MDAO {
 	public Board getBoard(int aid) throws SQLException {
 		Connection conn = open();
 		Board n = new Board();
-		String sql = "select aid, title, img, PARSEDATETIME(date,'yyyy-MM-dd') as cdate, content from board where aid=?";
+		String sql = "select aid, title, img, PARSEDATETIME(date,'yyyy-MM-dd') as cdate, content, count from board where aid=?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, aid);
 		ResultSet rs = pstmt.executeQuery();
@@ -144,6 +151,7 @@ public class MDAO {
 			n.setImg(rs.getString("img"));
 			n.setDate(rs.getString("cdate"));
 			n.setContent(rs.getString("content"));
+			n.setCount(rs.getInt("count"));
 			pstmt.executeQuery();
 			return n;
 		}
@@ -158,7 +166,7 @@ public class MDAO {
 			pstmt.setString(1,  n.getTitle());
 			pstmt.setString(2,  n.getImg());
 			pstmt.setString(3,  n.getContent());
-			pstmt.setInt(4,  0);
+			pstmt.setInt(4,  n.getCount());			
 			pstmt.executeUpdate();	
 		}
 	}
@@ -206,6 +214,19 @@ public class MDAO {
 		}				
 	}
 	
+	//페이지 표시 메서드
+	public int pLength(Board n) throws SQLException {
+		Connection conn = open();
+		String sql = "SELECT ceil(cast(count(aid)as DOUBLE)/?) as pageCnt FROM board "; 
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, n.getRowCountPerPage());
+		ResultSet rs = pstmt.executeQuery();
 	
-	
+		rs.next();
+		
+		try (conn; pstmt; rs) {		
+				return rs.getInt("pageCnt") ;			
+		} 
+	}
+		
 }

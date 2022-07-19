@@ -203,6 +203,8 @@ public String login(HttpServletRequest request, HttpServletResponse response) th
 		//로그인 성공
 		HttpSession session = request.getSession();
 		session.setAttribute("checklogin", "true" );
+		session.setAttribute("id", pw);
+		session.setAttribute("pw", pw);
 		
 		
 		return "tp/main.jsp";
@@ -302,17 +304,38 @@ public String deleteBoard(HttpServletRequest request, HttpServletResponse respon
 
 public String listBoard(HttpServletRequest request, HttpServletResponse response) {
 	List<Board> list;
-	try {
-		list = mdao.getAll();
-		request.setAttribute("boardlist",  list);
-	} catch (Exception e) {
-		e.printStackTrace();
-		ctx.log("게시글 목록 생성 과정에서 문제 발생!!");
-		request.setAttribute("error", "게시글 목록이 정상적으로 처리되지 않았습니다!!");
-	}
-	return "tp/MList.jsp";
+		HttpSession session = request.getSession();
+	
+	
+	if ( (String)session.getAttribute("checklogin") ==  "true"  ) {
+		try {
+			list = mdao.getAll();
+			request.setAttribute("boardlist",  list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("게시글 목록 생성 과정에서 문제 발생!!");
+			request.setAttribute("error", "게시글 목록이 정상적으로 처리되지 않았습니다!!");
 		
-}
+	}
+			return "tp/MList.jsp";
+	}else {   		
+		   
+	
+		response.setContentType("text/html; charset=euc-kr"); //한글이 인코딩
+		   PrintWriter out;
+		   try {
+			out = response.getWriter();
+	           out.println("<script>alert('로그인을 해 주세요.');  location.href='/jwbook/mcontrol?action=loginl' </script>");
+	           out.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       	return "tp/ls.jsp";}
+	}
+	
+	
+	
 public String getBoard(HttpServletRequest request, HttpServletResponse response) {
 	int aid = Integer.parseInt(request.getParameter("aid"));
 	int count=0;

@@ -268,113 +268,105 @@ public String idcheck(HttpServletRequest request, HttpServletResponse response )
 }
 
 
-public String addBoard(HttpServletRequest request, HttpServletResponse response) {
-	Board n = new Board();
-	try {
-		Part part = request.getPart("file");
-		String fileName = getFilename(part);
-		if(fileName != null && !fileName.isEmpty()) {
-			part.write(fileName);				
-		}
-		BeanUtils.populate(n,  request.getParameterMap());
-		n.setImg("/img/" + fileName);
-		mdao.addBoard(n);
-	} catch (Exception e) {
-		e.printStackTrace();
-		ctx.log("게시글 추가 과정에서 문제 발생!!");
-		request.setAttribute("error",  "게시글이 정상적으로 등록되지 않았습니다!!");
-		return listBoard(request,response);
-	}
-	return "redirect:/mcontrol?action=listBoard";		
-}
-
-public String deleteBoard(HttpServletRequest request, HttpServletResponse response) {
-	int aid = Integer.parseInt(request.getParameter("aid"));
-	try {
-		mdao.delBoard(aid);
-	} catch (SQLException e) {
-		e.printStackTrace();
-		ctx.log("게시글 삭제 과정에서 문제 발생!!");
-		request.setAttribute("error",  "게시글이 정상적으로 삭제되지 않았습니다!!");
-		return listBoard(request,response);
-	}
-	return "redirect:/mcontrol?action = listBoard";
-}  
-
-
-public String listBoard(HttpServletRequest request, HttpServletResponse response) {
-	List<Board> list;
-		HttpSession session = request.getSession();
-	
-	
-	if ( (String)session.getAttribute("checklogin") ==  "true"  ) {
+	public String addBoard(HttpServletRequest request, HttpServletResponse response) {
+		Board n = new Board();
 		try {
-			list = mdao.getAll();
-			request.setAttribute("boardlist",  list);
+			Part part = request.getPart("file");
+			String fileName = getFilename(part);
+			if(fileName != null && !fileName.isEmpty()) {
+				part.write(fileName);				
+			}
+			BeanUtils.populate(n,  request.getParameterMap());
+			n.setImg("/img/" + fileName);
+			mdao.addBoard(n);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("게시글 추가 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글이 정상적으로 등록되지 않았습니다!!");
+			return listBoard(request, response);
+		}
+		return "redirect:/mcontrol?action=listBoard";		
+	}
+	
+	public String deleteBoard(HttpServletRequest request, HttpServletResponse response) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		try {
+			mdao.delBoard(aid);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ctx.log("게시글 삭제 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글이 정상적으로 삭제되지 않았습니다!!");
+			return listBoard(request, response);
+		}
+		return "redirect:/mcontrol?action = listBoard";
+	}  
+	
+	
+	public String listBoard(HttpServletRequest request, HttpServletResponse response) {
+		List<Board> list;
+		
+		String strPage= request.getParameter("page");
+		int rowCnt = 5;
+		int page = strPage == null ? 1 : Integer.parseInt(strPage);	
+		
+		try {
+			Board n = new Board();
+			n.setRowCountPerPage(rowCnt);
+			n.setStartIdx((page-1)*rowCnt);	
+			
+			list = mdao.getAll(n);
+			request.setAttribute("boardlist",  list);			
+			request.setAttribute("pageLength", mdao.pLength(n));		
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 			ctx.log("게시글 목록 생성 과정에서 문제 발생!!");
 			request.setAttribute("error", "게시글 목록이 정상적으로 처리되지 않았습니다!!");
-		
-	}
-			return "tp/MList.jsp";
-	}else {   		
-		   
-	
-		response.setContentType("text/html; charset=euc-kr"); //한글이 인코딩
-		   PrintWriter out;
-		   try {
-			out = response.getWriter();
-	           out.println("<script>alert('로그인을 해 주세요.');  location.href='/jwbook/mcontrol?action=loginl' </script>");
-	           out.flush();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-       	return "tp/ls.jsp";}
+		return "TP/MList.jsp";
+			
+	}
+	public String getBoard(HttpServletRequest request, HttpServletResponse response) {
+		int aid = Integer.parseInt(request.getParameter("aid"));
+		int count=0;				
+		try {
+			Board n = mdao.getBoard(aid);
+			mdao.updateCount(aid);
+			request.setAttribute("board", n);			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			ctx.log("게시글을 가져오는 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글을 정상적으로 가져오지 못했습니다!!");
+		}
+		
+		return "TP/MView.jsp";
+	}
+	
+	private String getFilename(Part part) {
+		String fileName = null;
+		String header = part.getHeader("content-disposition");
+		System.out.println("Header => "+header);
+		int start = header.indexOf("filename=");
+		fileName = header.substring(start+10, header.length()-1);
+		ctx.log("파일명:"+fileName);
+		return fileName;
 	}
 	
 	
 	
-public String getBoard(HttpServletRequest request, HttpServletResponse response) {
-	int aid = Integer.parseInt(request.getParameter("aid"));
-	int count=0;
-	try {
-		Board n = mdao.getBoard(aid);
-		mdao.updateCount(aid);
-		request.setAttribute("board", n);			
-	} catch (SQLException e) {
-		e.printStackTrace();
-		ctx.log("게시글을 가져오는 과정에서 문제 발생!!");
-		request.setAttribute("error",  "게시글을 정상적으로 가져오지 못했습니다!!");
-	}
-	return "tp/MView.jsp";
-}
-
-private String getFilename(Part part) {
-	String fileName = null;
-	String header = part.getHeader("content-disposition");
-	System.out.println("Header => "+header);
-	int start = header.indexOf("filename=");
-	fileName = header.substring(start+10, header.length()-1);
-	ctx.log("파일명:"+fileName);
-	return fileName;
-}
-
-public String updateBoard(HttpServletRequest request, HttpServletResponse response) {
-	Board n = new Board();
-	try {			
-		BeanUtils.populate(n,  request.getParameterMap());			
-		mdao.updateBoard(n);
-		request.setAttribute("board", n);
-	} catch (Exception e) {
-		e.printStackTrace();
-		ctx.log("게시글 수정 과정에서 문제 발생!!");
-		request.setAttribute("error",  "게시글이 정상적으로 수정되지 않았습니다!!");			
-	}
-	return "redirect:/mcontrol?action=listBoard";		
-}
-
+	public String updateBoard(HttpServletRequest request, HttpServletResponse response) {
+		Board n = new Board();
+		try {			
+			BeanUtils.populate(n,  request.getParameterMap());			
+			mdao.updateBoard(n);
+			request.setAttribute("board", n);
+		} catch (Exception e) {
+			e.printStackTrace();
+			ctx.log("게시글 수정 과정에서 문제 발생!!");
+			request.setAttribute("error",  "게시글이 정상적으로 수정되지 않았습니다!!");			
+		}
+		return "redirect:/mcontrol?action=listBoard";		
+	}	
 
 	
 }	

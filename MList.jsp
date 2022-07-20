@@ -18,7 +18,7 @@
 	<ul class="list-group">
 	 <c:forEach var="board" items="${boardlist}" varStatus="status">
 	  <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">	
-	  <a  href="mcontrol?action=getBoard&aid=${board.aid}"    class="test-decoration-none"> [${status.count}], ${board.title}, ${board.date} </a>
+	  <a  href="mcontrol?action=getBoard&aid=${board.aid}"    class="test-decoration-none"> [${status.count}], ${board.title}, ${board.date} 작성자 :${board.id} </a>
 	  <a class="test-decoration-none">${board.count}, ${UserDo.id}</a>	  
 	  </li>
 	 </c:forEach>

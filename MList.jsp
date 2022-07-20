@@ -48,6 +48,7 @@
 	 	</div>
 	 </div>
 	 
+	<a href="/jwbook/mcontrol?action=startpage" class="btn btn-dark mb-3"> 홈으로 </a>
 	
 	 <div style="text-align:center; vertical-align:bottom; height:50px;">
 	 	<c:forEach begin="1" end="${requestScope.pageLength}" step="1" var="page">

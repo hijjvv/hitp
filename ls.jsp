@@ -44,24 +44,34 @@
 <title>로그인/회원가입</title>
 </head>
 <body>
-
 <div  class="container w-75 mt-5 mx-auto" >
 <h3 style="text-align: center;">메뉴</h3>
  <form action=""> <button class="form-control" >메인으로 돌아가기</button> </form>
  <form method="Post" action="/jwbook/mcontrol?action=sp"> <button class="form-control" >회원가입</button> </form>
 </div>
-	<div class="container w-75 mt-5 mx-auto">
-
-  				<h3 style="text-align: center;">로그인 화면</h3>
-  				<form method="post" action="/jwbook/mcontrol?action=login" name="formLogin" > 
-  				<div class="form-group">
-  					<input type="text" class="form-control" placeholder="아이디" name="id" maxlength="20">
-  				</div>
-  				<div class="form-group">
-  					<input type="password" class="form-control" placeholder="비밀번호" name="pw" maxlength="20">
-  				</div>
-  				<input type="button" onclick="fn_validate()" class="btn btn-primary form-control" value="로그인">
-  		 		</form>
-  		</div>
+	<div class="container w-50 mt-50 mx-auto">
+		<br /><br />
+		<h3 style="text-align: center;"><b>로그인 화면</b></h3>	
+		<form method="post" action="/jwbook/mcontrol?action=login" name="formLogin" style="margin-top: 7%;" >
+			<div class="form-group" style="margin-top: 1%;">
+				<input type="text" class="form-control" placeholder="아이디" name="id"
+					maxlength="20">
+			</div>
+			<div class="form-group" style="margin-top: 1%">
+				<input type="password" class="form-control" placeholder="비밀번호"
+					name="pw" maxlength="20">
+			</div>
+			<input type="button" onclick="fn_validate()"
+				class="btn btn-dark form-control" value="로그인" style="margin-top: 1%">
+		</form>
+	</div>
+	<div class="container w-50 mt-50 mx-auto">
+		
+		<table align="right" height="50" sytle="margin-top:1%" class="mo">
+		<tr>
+			<td><a style="text-decoration:none; display:inline-block" href="/jwbook/mcontrol?action=sp">회원가입 | </a></td>
+			<td><a style="text-decoration:none; display:inline-block;" href="/jwbook/mcontrol?action=startpage">  메인메뉴 </a></td>			
+		</tr>
+		</table>
 </body>
 </html>

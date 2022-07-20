@@ -21,7 +21,7 @@
 		</div> 
 	</div>
 	<hr />
-	<a href="javascript:history.back()" class="btn btn-primary"> << Back </a>
+	<a href="javascript:history.back()" class="btn btn-outline-info mb-3"> 뒤로가기 </a>
 		 
 		
 	 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#updateForm" aria-expanded="false" aria-controls="updateForm">

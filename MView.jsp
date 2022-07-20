@@ -24,7 +24,7 @@
 	<a href="javascript:history.back()" class="btn btn-dark mb-3"> 뒤로가기 </a>
 		 
 		
-	 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#updateForm" aria-expanded="false" aria-controls="updateForm">
+	 <button class="btn btn-dark mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#updateForm" aria-expanded="false" aria-controls="updateForm">
 	 게시글 수정
 	 </button>
 	 <div class="collapse" id="updateForm"> 
@@ -36,7 +36,7 @@
 	 			<input type="text" name="title" class="form-control" value="${board.title}"/>	 			
 	 			<label class="form-label">게시글 내용</label>
 	 			<textarea cols="50" rows="5" name="content" class="form-control">${board.content}</textarea>
-	 			<button type="submit" class="btn btn-success mt-3" onclick="return send()">수정</button>
+	 			<button type="submit" class="btn btn-dark mt-3" onclick="return send()">수정</button>
 	 		</form>
 	 	</div>
 	 </div>

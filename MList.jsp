@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="container w-75 mt-5 mx-auto">
-	<h2>게시글 목록</h2>
+	<h3 style="text-align: center;"><b>게시판</b></h3>	
 	<hr />
 	<ul class="list-group">
 	 <c:forEach var="board" items="${boardlist}" varStatus="status">

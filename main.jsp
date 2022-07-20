@@ -8,27 +8,39 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <style>
+
+
 body {
-background-image: url("img/2.jpg");
+background-image: url("tp/img/2.jpg");
 background-repeat: no-repeat;
 background-size: cover;}
-
 header{
 opacity: 0.5;
 display:inline-block; 
 background-color: #000000; 
 width: 100%
 }
-
 ul.munu-ul {
 color: #FFFFFF
 }
-
-p.pp{
+.pp{
 position: relative;
-top: ;
-bottom: ;}
+padding-top : 30px ;
+text-align: center;
+ 
+}
 
+.maintext {
+	background-color : white;
+	opacity: 0.7;
+	width : 400px;
+	height : 200px;
+	margin-left: 50%;
+	margin: auto;
+		margin-top: 15%;
+		text-align: center;
+	
+}
 
 
 </style>
@@ -43,7 +55,7 @@ bottom: ;}
 		<table style=align:center;>	
 		<tr>
 		<td>
-		<img src="img/logo.jpg" alt width = "241" height="52"></div>
+		<img src="tp/img/logo.jpg" alt width = "241" height="52"></div>
 		</td>
 		<td style="margin-top: 4%; text-align: center;">
 		<nav class="menu-class">
@@ -66,7 +78,7 @@ bottom: ;}
 		<div id="mainpage">
 			<section id="home" data-type="anchor">
 				<div class="maintext" style="text-align:center;">					
-					<p class= pp style="font-size: 1.8em; font-weight: bold; color: #FFFFFF;">6조 JSP PROJECT 입니다.</p>
+					<p class= pp style="font-size: 2.0em; font-weight: bold; color: #000000;">6조 JSP PROJECT 입니다.</p>
 					<div style="left: 100px; width: 450px; bottom: 140px;  ">								
 					</div>
 				</div>				

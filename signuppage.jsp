@@ -15,7 +15,6 @@
 <script type="text/javascript">
  var result ;
  result = <%=request.getAttribute("result") %> ;
-
 		function usercheck(){
 	  
      		var f1 = document.formsign;
@@ -32,7 +31,6 @@
 		}
 		
 		
-
 		function reset(){
 			
 		}
@@ -48,8 +46,8 @@
 				//<form>태그 내 <input>태그의 속성으로 입력한 ID와 비밀번호를 받아온다
 				var id = formsign.id.value;
 				var pw = formsign.pw.value;
-				var name = formsign.pw.value;
-				var email = formsign.pw.value;
+				var name = formsign.name.value;
+				var email = formsign.email.value;
 				
 				if((id=="" || pw =="" || name =="" || email =="") || (id == 0 || pw == 0|| name == 0|| email == 0))
 				{
@@ -72,7 +70,6 @@
 					alert('회원가입 성공!');
 				}			
 			}
-
 			
 			function change() {
 				result = 1;

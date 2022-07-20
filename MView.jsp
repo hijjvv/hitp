@@ -21,7 +21,7 @@
 		</div> 
 	</div>
 	<hr />
-	<a href="javascript:history.back()" class="btn btn-outline-info mb-3"> 뒤로가기 </a>
+	<a href="javascript:history.back()" class="btn btn-dark mb-3"> 뒤로가기 </a>
 		 
 		
 	 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#updateForm" aria-expanded="false" aria-controls="updateForm">
@@ -41,7 +41,7 @@
 	 	</div>
 	 </div>
 		
-	<button class="btn btn-outline-info mb-3" type="submit" onclick="return delOK()">
+	<button class="btn btn-dark mb-3" type="submit" onclick="return delOK()">
 	 삭제하기
 	 </button>
 	 <div id="deleteForm" class="remove">
@@ -50,7 +50,7 @@
 	 </div>
 		
 		
-	 <button class="btn btn-outline-info mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#replyForm" aria-expanded="false" aria-controls="replyForm">
+	 <button class="btn btn-dark mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#replyForm" aria-expanded="false" aria-controls="replyForm">
 	 댓글 달기
 	 </button>
 	 <div class="collapse" id="replyForm"> 

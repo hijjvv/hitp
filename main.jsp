@@ -63,7 +63,6 @@ img {
 
 
 
-
 </head>
 <body>
 
@@ -76,7 +75,7 @@ img {
 
 
 </header>
-<div  >
+
 <br />
 
 <div class="container-sm" >
@@ -108,10 +107,11 @@ img {
 		<br /><br />
 		
 			<div class="container-md" >
-<img src="img/b1.jpg" alt="" />
+<img src="tp/img/b1.jpg" alt="" />
 		 </div>
 
 		
+
 
 
 

@@ -92,27 +92,37 @@
 <body>
 
 
-<div class="container">
+	<div class="container">
 		<div class="col-lg-4"></div>
 		<div class="col-lg-4">
 			<div class="jumbotron" style="padding-top: 20px;">
-				<form method="post" action="/jwbook/mcontrol?action=signup" name="formsign">
-					<h3 style="text-align: center;">회원가입 화면</h3>
+				<form method="post" action="/jwbook/mcontrol?action=signup"
+					name="formsign">
+					<h3 style="text-align: center;"><b>회원가입 화면</b></h3>
+					<br />
 					<div class="form-group">
-						<input type="text" class="" placeholder="아이디" name="id" maxlength="20" value="${iid}" onchange="change()" >
-						<input type="button" class="btn btn-primary form-control" value="중복확인" onclick="usercheck()" >
-					<input type="text" value="${msg}" />
+						<input type="text" class="" placeholder="아이디" name="id"
+							maxlength="20" value="${iid}" onchange="change()"> 
+							
+							<button type="submit" class="btn btn-secondary btn-sm" onclick="return usercheck()">중복체크</button>
+							<input type="text" value="${msg}" style="border:none; color:#FE2E2E"  />									
+														
+							
 					</div>
 					<div class="form-group">
-						<input type="password" class="form-control" placeholder="비밀번호" name="pw" maxlength="20">
+						<input type="password" class="form-control" placeholder="비밀번호"
+							name="pw" maxlength="20" style="margin-top: 2%">
 					</div>
 					<div class="form-group">
-						<input type="text" class="form-control" placeholder="이름" name="name" maxlength="20">
+						<input type="text" class="form-control" placeholder="이름"
+							name="name" maxlength="20" style="margin-top: 2%">
 					</div>
 					<div class="form-group">
-						<input type="email" class="form-control" placeholder="이메일" name="email" maxlength="20">
+						<input type="email" class="form-control" placeholder="이메일"
+							name="email" maxlength="20" style="margin-top: 2%">
 					</div>
-					<input type="button" class="btn btn-primary form-control" value="회원가입" onclick="fnsign()" >
+					<input type="button" class="btn btn-dark form-control"
+						value="회원가입" onclick="fnsign()" style="margin-top: 2%">
 				</form>
 			</div>
 		</div>

@@ -15,11 +15,13 @@
 	<div class="container w-75 mt-5 mx-auto">
 	<h3 style="text-align: center;"><b>게시판</b></h3>	
 	<hr />
+	
 	<ul class="list-group">
 	 <c:forEach var="board" items="${boardlist}" varStatus="status">
 	  <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">	
-	  <a  href="mcontrol?action=getBoard&aid=${board.aid}"    class="test-decoration-none"> [${status.count}], ${board.title}, ${board.date} 작성자 :${board.id} </a>
-	  <a class="test-decoration-none">${board.count}, ${UserDo.id}</a>	  
+	  <a  href="mcontrol?action=getBoard&aid=${board.aid}"    class="test-decoration-none"> [${status.count}], ${board.title}, ${board.date}  </a>
+	  <a class="test-decoration-none"> ${board.id} | ${board.count} </a>
+	  
 	  </li>
 	 </c:forEach>
 	</ul>

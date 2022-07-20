@@ -44,11 +44,7 @@
 <title>로그인/회원가입</title>
 </head>
 <body>
-<div  class="container w-75 mt-5 mx-auto" >
-<h3 style="text-align: center;">메뉴</h3>
- <form action=""> <button class="form-control" >메인으로 돌아가기</button> </form>
- <form method="Post" action="/jwbook/mcontrol?action=sp"> <button class="form-control" >회원가입</button> </form>
-</div>
+
 	<div class="container w-50 mt-50 mx-auto">
 		<br /><br />
 		<h3 style="text-align: center;"><b>로그인 화면</b></h3>	
